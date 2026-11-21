@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartas com carinho</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@1,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3E7EC;--panel:#FBF6F8;--ink:#2B1630;--mute:#6B5470;--line:#DCC8D2;--accent:#8E2A52;--on-accent:#fff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1C0F22;--panel:#2A1733;--ink:#F3E4EA;--mute:#B9A0BE;--line:#46294F;--accent:#E58AA8;--on-accent:#2A1020;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1C0F22;--panel:#2A1733;--ink:#F3E4EA;--mute:#B9A0BE;--line:#46294F;--accent:#E58AA8;--on-accent:#2A1020;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1rem/1.55 Figtree,system-ui,sans-serif}
+.wrap{max-width:1120px;margin:0 auto;padding:2.5rem 1.25rem 3rem}
+h1{font:600 clamp(2rem,5vw,3.4rem)/1.08 Fraunces,Georgia,serif;margin:0 0 .6rem;max-width:16ch;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 2.2rem;max-width:46ch}
+.grid{display:grid;gap:2rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:920px){.grid{grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:3rem;align-items:start}}
+form{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:1.4rem;display:grid;gap:1.1rem}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend,label.t{font-weight:600;font-size:.92rem;padding:0;margin-bottom:.4rem;display:block}
+.opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{position:relative;cursor:pointer}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:block;padding:.5rem .95rem;border:1px solid var(--line);border-radius:999px;font-size:.93rem;background:transparent;transition:background .15s,color .15s}
+.chip:has(input:checked) span{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.chip:has(input:focus-visible) span{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.seg .chip span{border-radius:12px;text-align:center;padding:.7rem .6rem}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem}
+input[type=text]:focus-visible,textarea:focus-visible,button:focus-visible,.letter-body:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+textarea{resize:vertical;min-height:3.4rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.hint{font-size:.82rem;color:var(--mute);margin:.25rem 0 0}
+button{font:inherit;cursor:pointer;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:.65rem 1rem}
+button.main{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600;padding:.85rem 1rem;font-size:1.02rem}
+.stage{min-width:0}
+.tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
+.look{display:flex;flex-wrap:wrap;gap:1rem 1.6rem;margin-bottom:1.8rem}
+.look .opts{gap:.4rem}
+.look .chip span{padding:.35rem .8rem;font-size:.85rem}
+.letter{--paper:#FBF7F9;--pink:#3A2441;position:relative;background:var(--paper);color:var(--pink);border-radius:6px;padding:3.4rem 2rem 2.2rem;box-shadow:0 1px 0 rgba(0,0,0,.05),0 18px 40px -18px rgba(60,10,40,.45);min-height:420px}
+.letter[data-paper=rosa]{--paper:#F6DCE3;--pink:#4A1F33}
+.letter[data-paper=noite]{--paper:#2E1F45;--pink:#F1E6F2;box-shadow:0 18px 40px -18px #000}
+.seal{position:absolute;top:-26px;left:50%;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E0526F,#9E1B3A 70%);display:grid;place-items:center;color:#FFD9E0;font-size:1.5rem;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.letter-body{outline-offset:6px;font-family:Fraunces,Georgia,serif;font-size:1.1rem;line-height:1.7}
+.letter[data-font=manuscrita] .letter-body{font-family:Caveat,cursive;font-size:1.7rem;line-height:1.45}
+.letter[data-font=poetica] .letter-body{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:1.38rem;line-height:1.55}
+.letter-body p{margin:0 0 1.05em}
+.letter-body .g{font-weight:600}
+.letter-body .sig{margin-top:1.6em}
+.letter-body .vazio{opacity:.65;font-style:italic;max-width:34ch}
+.letter.go{animation:unfold .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes unfold{from{transform:scaleY(.82) translateY(14px);opacity:0;transform-origin:top}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.letter.go{animation:none}.chip span{transition:none}}
+#status{min-height:1.4em;font-size:.9rem;color:var(--mute);margin:.9rem 0 0}
+.note{font-size:.85rem;color:var(--mute);margin-top:1rem;max-width:56ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Escreva a carta que você tem vontade de entregar</h1>
+  <p class="sub">Responda algumas perguntas simples e receba uma carta pronta, para convidar alguém para um encontro ou dizer o que sente. Depois é só editar do seu jeito.</p>
+
+  <div class="grid">
+    <form id="f" autocomplete="off">
+      <fieldset>
+        <legend>O que você quer escrever?</legend>
+        <div class="seg">
+          <label class="chip"><input type="radio" name="tipo" value="encontro" checked><span>Convite para um encontro</span></label>
+          <label class="chip"><input type="radio" name="tipo" value="amor"><span>Carta de amor</span></label>
+        </div>
+      </fieldset>
+
+      <div class="two">
+        <div><label class="t" for="para">Para quem?</label><input type="text" id="para" placeholder="Nome de quem vai ler"></div>
+        <div><label class="t" for="de">De quem?</label><input type="text" id="de" placeholder="Seu nome"></div>
+      </div>
+
+      <div>
+        <label class="t" for="admira">O que você admira nessa pessoa?</label>
+        <textarea id="admira" rows="2" placeholder="o jeito como ela ri das próprias piadas"></textarea>
+        <p class="hint">Complete a frase “O que mais me encanta em você é…”</p>
+      </div>
+
+      <div>
+        <label class="t" for="lembra">Uma lembrança de vocês (opcional)</label>
+        <textarea id="lembra" rows="2" placeholder="a noite em que voltamos a pé conversando"></textarea>
+      </div>
+
+      <div id="blocoConvite">
+        <label class="t" for="convite">Qual é o convite?</label>
+        <textarea id="convite" rows="2" placeholder="jantar no sábado, às 19h, na pizzaria da praça"></textarea>
+        <p class="hint">O quê, quando e onde. Se deixar vazio, o convite fica aberto.</p>
+      </div>
+
+      <fieldset>
+        <legend>Qual é o tom?</legend>
+        <div class="opts">
+          <label class="chip"><input type="radio" name="tom" value="romantico" checked><span>Romântico</span></label>
+          <label class="chip"><input type="radio" name="tom" value="divertido"><span>Divertido</span></label>
+          <label class="chip"><input type="radio" name="tom" value="poetico"><span>Poético</span></label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="main" id="gerar">Escrever minha carta</button>
+    </form>
+
+    <section class="stage" aria-label="Sua carta">
+      <div class="look">
+        <fieldset>
+          <legend>Papel</legend>
+          <div class="opts">
+            <label class="chip"><input type="radio" name="papel" value="seda" checked><span>Seda</span></label>
+            <label class="chip"><input type="radio" name="papel" value="rosa"><span>Rosa antigo</span></label>
+            <label class="chip"><input type="radio" name="papel" value="noite"><span>Noite</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Letra</legend>
+          <div class="opts">
+            <label class="chip"><input type="radio" name="letra" value="classica" checked><span>Clássica</span></label>
+            <label class="chip"><input type="radio" name="letra" value="manuscrita"><span>Manuscrita</span></label>
+            <label class="chip"><input type="radio" name="letra" value="poetica"><span>Poética</span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <article class="letter" id="letter" data-paper="seda" data-font="classica">
+        <div class="seal" aria-hidden="true">♥</div>
+        <div class="letter-body" id="corpo" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Texto da carta, você pode editar">
+          <p class="vazio">Preencha as perguntas ao lado e a sua carta aparece aqui. Você pode clicar no texto para mudar qualquer frase.</p>
+        </div>
+      </article>
+
+      <p id="status" role="status" aria-live="polite"></p>
+      <div class="tools">
+        <button type="button" id="outra">Outra versão</button>
+        <button type="button" id="copiar">Copiar texto</button>
+        <button type="button" id="enviar">Compartilhar</button>
+      </div>
+      <p class="note">Dica: troque as palavras que não soam como você. Uma carta fica melhor quando tem a sua voz.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+const el = id => document.getElementById(id);
+const val = n => document.querySelector('input[name="' + n + '"]:checked').value;
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const clean = s => s.trim().replace(/[.!]+$/, '');
+
+const B = {
+  romantico: {
+    intro: {
+      encontro: [`Tenho um convite para te fazer, e demorei para achar as palavras certas.`, `Escrevi esta carta porque um convite assim merece mais do que uma mensagem apressada.`],
+      amor: [`Algumas coisas não cabem numa mensagem rápida, então resolvi escrever com calma.`, `Tem sentimentos que eu carrego o tempo todo e quase nunca digo direito. Hoje decidi tentar.`]
+    },
+    admira: [a => `O que mais me encanta em você é ${a}. Isso muda o meu dia mais do que você imagina.`, a => `Eu admiro ${a}, e cada vez que percebo isso gosto ainda mais de você.`],
+    lembra: [m => `Tem uma lembrança que não sai da minha cabeça: ${m}. Foi ali que entendi que queria você por perto.`, m => `Guardo uma lembrança nossa com muito cuidado: ${m}.`],
+    meio: {
+      encontro: [`Não preciso de nada elaborado: só da sua companhia e de uma boa conversa.`, `Quero te conhecer ainda mais e ver como o tempo passa rápido ao seu lado.`],
+      amor: [`Com você, tudo fica mais leve e mais verdadeiro. Eu queria que você soubesse disso.`, `Você me faz querer ser um pouco melhor, sem nunca me cobrar nada por isso.`]
+    },
+    convite: [q => `Por isso, quero te convidar para ${q}. Sem pressa e sem roteiro, só nós dois.`, q => `Que tal ${q}? Eu cuido do resto, você só precisa aparecer com esse sorriso.`],
+    fim: {
+      encontro: [`Já estou contando as horas pela sua resposta.`, `Diga que sim, e eu prometo que vale a pena.`],
+      amor: [`Era isso. Simples, e inteiro.`, `Que bom que você existe do jeito que existe.`]
+    },
+    despede: [`Com carinho,`, `Todo o meu carinho,`]
+  },
+  divertido: {
+    intro: {
+      encontro: [`Prepare-se: chegou uma carta oficial, selada com muito nervosismo e boas intenções.`, `Sim, uma carta de verdade, em pleno século XXI. Isso mostra o quanto estou falando sério (mais ou menos).`],
+      amor: [`Avisei que um dia ia escrever uma carta. Aqui está, com um pouco de vergonha e muito carinho.`, `Esta carta tem 100% de sentimentos reais e 0% de talento literário. Releve.`]
+    },
+    admira: [a => `Preciso confessar: ${a} é um dos meus motivos favoritos para gostar de você.`, a => `Se existisse um ranking, ${a} estaria no topo das coisas que mais me conquistam.`],
+    lembra: [m => `Item obrigatório da minha lista de melhores momentos: ${m}.`, m => `Não esqueço de jeito nenhum: ${m}. Fico sorrindo à toa só de lembrar.`],
+    meio: {
+      encontro: [`Prometo boa companhia, conversa fiada e pelo menos uma piada ruim.`, `Zero pressão, risco mínimo de passar vergonha (mas não garanto nada).`],
+      amor: [`Você me faz rir até nos dias ruins, e isso vale mais do que qualquer presente.`, `Perto de você, até uma terça-feira comum vira dia de festa.`]
+    },
+    convite: [q => `Então, a proposta é: ${q}. Aceite e eu prometo não dançar em público. Talvez.`, q => `Agora o convite oficial: ${q}. As respostas aceitas são “sim”, “claro” e “com certeza”.`],
+    fim: {
+      encontro: [`Aguardo sua resposta com o coração acelerado e o celular na mão.`, `Responda logo, que a minha ansiedade já pediu hora extra.`],
+      amor: [`Pronto, falei. Me dá um abraço quando a gente se ver.`, `É isso. Guarde esta carta e use contra mim quando precisar.`]
+    },
+    despede: [`Com todo o carinho (e um pouco de nervosismo),`, `Até breve,`]
+  },
+  poetico: {
+    intro: {
+      encontro: [`Há convites que nascem devagar, como o fim de uma tarde. Este é um deles.`, `Escrevo para te chamar a um instante só nosso.`],
+      amor: [`Quando as palavras faltam, a escrita me empresta um pouco de calma.`, `Escrevo como quem acende uma luz pequena na noite, para você encontrar o caminho até aqui.`]
+    },
+    admira: [a => `Em você, ${a} é uma daquelas coisas que ficam no ar depois que você sai da sala.`, a => `Entre tantas coisas, ${a} é o que me faz olhar duas vezes, e depois mais uma.`],
+    lembra: [m => `Uma lembrança me visita com frequência: ${m}.`, m => `Há um instante que guardo como quem guarda uma flor entre páginas: ${m}.`],
+    meio: {
+      encontro: [`Que seja uma noite sem relógio, com conversa que se estende e silêncio que não pesa.`, `Quero dividir com você um pedaço do dia em que nada mais precise acontecer.`],
+      amor: [`Com você, o tempo anda mais devagar e o mundo fica mais macio.`, `Você é abrigo e é horizonte, e não sei dizer qual dos dois me faz mais bem.`]
+    },
+    convite: [q => `Venha comigo: ${q}. O resto a gente escreve juntos.`, q => `Deixo aqui o convite: ${q}. Que o caminho até lá seja leve.`],
+    fim: {
+      encontro: [`Sua resposta será a primeira coisa que vou querer ler amanhã.`, `Espero por você, de coração aberto.`],
+      amor: [`Que estas palavras te encontrem e te lembrem do quanto você importa.`, `Guarde esta carta onde a luz bate de tarde.`]
+    },
+    despede: [`Com todo o meu afeto,`, `Com ternura,`]
+  }
+};
+
+let V = [0, 0, 0, 0, 0, 0, 0];
+const reroll = () => { V = V.map(() => Math.floor(Math.random() * 1000)); };
+const pick = (arr, i) => arr[V[i] % arr.length];
+
+function build() {
+  const tipo = val('tipo'), tom = val('tom'), b = B[tom];
+  const n = clean(el('para').value) || 'você';
+  const eu = clean(el('de').value);
+  const greet = tom === 'divertido' ? `Oi, ${n}!` : tom === 'poetico' ? `${cap(n)},` : `Para ${n},`;
+  const paras = [pick(b.intro[tipo], 0)];
+  const a = clean(el('admira').value), m = clean(el('lembra').value);
+  if (a) paras.push(pick(b.admira, 1)(a));
+  if (m) paras.push(pick(b.lembra, 2)(m));
+  paras.push(pick(b.meio[tipo], 3));
+  if (tipo === 'encontro') {
+    const q = clean(el('convite').value) || 'um encontro só nosso';
+    paras.push(pick(b.convite, 4)(q));
+  }
+  paras.push(pick(b.fim[tipo], 5));
+  return { greet, paras, despede: pick(b.despede, 6), eu };
+}
+
+function render() {
+  const c = build(), box = el('corpo');
+  box.textContent = '';
+  const add = (txt, cls) => { const p = document.createElement('p'); if (cls) p.className = cls; p.textContent = txt; box.appendChild(p); return p; };
+  add(c.greet, 'g');
+  c.paras.forEach(t => add(t));
+  const s = add(c.despede, 'sig');
+  if (c.eu) { s.appendChild(document.createElement('br')); s.appendChild(document.createTextNode(c.eu)); }
+  const L = el('letter');
+  L.classList.remove('go'); void L.offsetWidth; L.classList.add('go');
+}
+
+function status(msg) { el('status').textContent = msg; setTimeout(() => { if (el('status').textContent === msg) el('status').textContent = ''; }, 2600); }
+
+function copyText(t) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(t).then(() => true).catch(() => fallbackCopy(t));
+  }
+  return Promise.resolve(fallbackCopy(t));
+}
+function fallbackCopy(t) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta); return ok;
+  } catch (e) { return false; }
+}
+const letterText = () => el('corpo').innerText.trim();
+const hasLetter = () => !el('corpo').querySelector('.vazio');
+
+function syncLook() {
+  el('letter').dataset.paper = val('papel');
+  el('letter').dataset.font = val('letra');
+}
+function syncTipo() {
+  el('blocoConvite').style.display = val('tipo') === 'encontro' ? '' : 'none';
+}
+
+const KEYS = ['para', 'de', 'admira', 'lembra', 'convite'];
+function save() {
+  try {
+    const d = {}; KEYS.forEach(k => d[k] = el(k).value);
+    ['tipo', 'tom', 'papel', 'letra'].forEach(k => d[k] = val(k));
+    localStorage.setItem('cartas-rascunho', JSON.stringify(d));
+  } catch (e) {}
+}
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem('cartas-rascunho') || 'null');
+    if (!d) return;
+    KEYS.forEach(k => { if (typeof d[k] === 'string') el(k).value = d[k]; });
+    ['tipo', 'tom', 'papel', 'letra'].forEach(k => {
+      const r = document.querySelector('input[name="' + k + '"][value="' + d[k] + '"]');
+      if (r) r.checked = true;
+    });
+  } catch (e) {}
+}
+
+el('f').addEventListener('submit', e => { e.preventDefault(); reroll(); render(); });
+el('f').addEventListener('input', () => { syncTipo(); save(); });
+document.querySelectorAll('input[name="papel"],input[name="letra"]').forEach(r => r.addEventListener('change', () => { syncLook(); save(); }));
+el('outra').addEventListener('click', () => { reroll(); render(); });
+el('copiar').addEventListener('click', () => {
+  if (!hasLetter()) return status('Escreva a carta primeiro.');
+  copyText(letterText()).then(ok => status(ok ? 'Carta copiada.' : 'Não consegui copiar. Selecione o texto e copie manualmente.'));
+});
+el('enviar').addEventListener('click', () => {
+  if (!hasLetter()) return status('Escreva a carta primeiro.');
+  const t = letterText();
+  if (navigator.share) { navigator.share({ text: t }).catch(() => {}); }
+  else copyText(t).then(ok => status(ok ? 'Carta copiada. Agora é só colar na conversa.' : 'Não consegui copiar. Selecione o texto e copie manualmente.'));
+});
+
+load(); syncTipo(); syncLook(); reroll();
+</script>
+</body>
+</html>
